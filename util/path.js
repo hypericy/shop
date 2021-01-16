@@ -1,3 +1,1 @@
-const path = require('path');
-
-module.exports = path.dirname(process.mainModule.filename);
+module.exports = "mongodb+srv://chris:kcSciWwxrdcMAd48@cluster0.nphhe.mongodb.net/shop?retryWrites=true&w=majority";

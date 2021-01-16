@@ -1,9 +1,10 @@
 const mongodb = require('mongodb');
+const path = require('./path')
 const MongoClient = mongodb.MongoClient;
 let db;
 
 const mongoConnect = (callback) => {
-  MongoClient.connect('mongodb+srv://chris:kcSciWwxrdcMAd48@cluster0.nphhe.mongodb.net/shop?retryWrites=true&w=majority', { useUnifiedTopology: true })
+  MongoClient.connect(path, { useUnifiedTopology: true })
     .then(client => {
       console.log('Connected to MongoDB'); 
       db = client.db();
