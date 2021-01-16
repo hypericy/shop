@@ -18,7 +18,7 @@ exports.postAddProduct = (req, res, next) => {
     .save()
     .then(result => {
       // console.log(result);
-      console.log('Created Product');
+      // console.log('Created Product');
       res.redirect('/admin/products');
     })
     .catch(err => {
@@ -71,7 +71,7 @@ exports.postDeleteProduct = (req, res, next) => {
   const prodId = req.body.productId;
   Product.deleteById(prodId)
     .then(result => {
-      console.log('DESTROYED PRODUCT');
+      // console.log('DESTROYED PRODUCT');
       res.redirect('/admin/products');
     })
     .catch(err => console.log(err));

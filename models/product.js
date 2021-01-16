@@ -25,7 +25,7 @@ class Product{
     return db.collection('products')
     .updateOne({_id: this._id}, {$set: this})
     .then(result =>{
-      console.log(result);
+      // console.log(result);
     })
     .catch(console.log);
   }
