@@ -41,21 +41,36 @@ class User {
 
   getCart() {
     const db = getDb();
-    const productIds = this.cart.items.map(item => {
+    let productIds = this.cart.items.map(item => {
       return item.productId
     });
+    let cartProducts;
     return db.collection('products')
       .find({ _id: { $in: productIds } })
       .toArray()
       .then(products => {
-        return products.map(p => {
+        productIds = products.map(p=>{
+          return p._id.toString();
+        })
+        let updateItems = this.cart.items.filter(item =>{
+          return productIds.includes(item.productId.toString());
+        })
+        cartProducts =  products.map(p => {
           return {
             ...p, quantity: this.cart.items.find(i => {
               return i.productId.toString() === p._id.toString();
             }).quantity
           }
         })
-      });
+        return db.collection('users')
+        .updateOne(
+          { _id: new mongodb.ObjectId(this._id) },
+          { $set: { cart: {items: updateItems} } }
+        )
+      })
+      .then( ()=>{
+        return cartProducts;
+      })
   }
 
   deleteCartProduct(id) {
@@ -63,7 +78,6 @@ class User {
     const updatedCartItems = this.cart.items.filter(item => {
       return item.productId.toString() !== id.toString();
     })
-    console.log(updatedCartItems);
     return db.collection('users')
       .updateOne(
         { _id: new mongodb.ObjectId(this._id) },
